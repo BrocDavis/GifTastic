@@ -1,9 +1,11 @@
-topics = ["destiny2", "wakboarding"]
+var topics = ["destiny2", "wakboarding"]
 
 
-$("#submit-button").on("click", function () {
-
-  var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&tag=cats";
+$("button").on("click", function () {
+  var topic = $(this).attr("data-topic");
+  var key = "XzBs6CdLaZ3hdeMUzEqOHA21QMUx1BXV";
+  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+    topic + "&api_key=" + key + "&limit=10";
 
   $.ajax({
     url: queryURL,
@@ -11,17 +13,34 @@ $("#submit-button").on("click", function () {
   })
 
     .then(function (response) {
-      var imageUrl = response.data.image_original_url;
+      var results = response.data;
 
+      for (var i = 0; i < results.length; i++) {
 
-      var storeImage = $("<img>");
+        var topicDiv = $("<div>");
 
-      // Setting the catImage src attribute to imageUrl
-      storeImage.attr("src", imageUrl);
-      storeImage.attr("alt", "image");
+        var p = $("<p>").text("Rating: " + results[i].rating);
 
-      // Prepending the catImage to the images div
-      $("#images").prepend(storeImage);
+        var topicImage = $("<img>");
+        topicImage.attr("src", results[i].images.fixed_height.url);
+        topicImage.attr("data-state","still");
+        
+
+        topicDiv.append(p);
+        topicDiv.append(topicImage);
+
+        $("#gifs-appear-here").prepend(topicDiv);
+      }
     });
-
+    //if gif is clicked set to animate and set to still if animated
+    $(".gif").on("click", function() {
+      var state = $(this).attr("data-state");
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+      } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+      }
+    });
 });
