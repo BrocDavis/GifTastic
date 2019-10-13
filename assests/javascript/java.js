@@ -1,5 +1,6 @@
-var topics = ["destiny2", "wakboarding"]
-
+var topics = ["destiny2", "wakboarding"];
+//dipslay topics array as buttons to click
+displayButtons();
 
 $("button").on("click", function () {
   var topic = $(this).attr("data-topic");
@@ -18,14 +19,12 @@ $("button").on("click", function () {
       for (var i = 0; i < results.length; i++) {
 
         var topicDiv = $("<div>");
-
         var p = $("<p>").text("Rating: " + results[i].rating);
-
         var topicImage = $("<img>");
+        
         topicImage.attr("src", results[i].images.fixed_height.url);
         topicImage.attr("data-state","still");
         
-
         topicDiv.append(p);
         topicDiv.append(topicImage);
 
@@ -44,3 +43,12 @@ $("button").on("click", function () {
       }
     });
 });
+//function to display each index of the array as a button
+function displayButtons(){
+  for(var i = 0; i< topics.length; i++){
+    var b = $("<button>").text(topics[i]).attr();
+    
+    $("#button-layout").append(b);
+
+  }
+}
