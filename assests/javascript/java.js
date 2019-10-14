@@ -2,7 +2,7 @@ var topics = ["destiny2", "wakeboarding", "dominoes","explosions"];
 //dipslay topics array as buttons to click
 displayButtons();
 
-$("button").on("click", function () {
+$(".topic-button").on("click", function () {
   var topic = $(this).attr("data-topic");
   var key = "XzBs6CdLaZ3hdeMUzEqOHA21QMUx1BXV";
   var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -38,7 +38,6 @@ $("button").on("click", function () {
 
 //if a gif is clicked set to animate and set to still if animated
 $("#gifs-appear-here").on("click", ".gif", function() {
-  console.log("clicked");
   var state = $(this).attr("data-state");
   if (state === "still") {
     $(this).attr("src", $(this).attr("data-animate"));
@@ -48,11 +47,21 @@ $("#gifs-appear-here").on("click", ".gif", function() {
     $(this).attr("data-state", "still");
   }
 });
+
+$(".submit-button").on("click", function(){
+  event.preventDefault();
+  var newTopic = $("#topic-input").val().trim();
+  topics.push(newTopic);
+  console.log(topics);
+  displayButtons();
+});
+
 //function to display each index of the array as a button
 function displayButtons() {
+  $("#button-layout").empty();
   for (var i = 0; i < topics.length; i++) {
     var b = $("<button>").text(topics[i]);
-    b.attr({ "data-state": "still", "data-topic": topics[i] });
+    b.attr({ "data-state": "still", "data-topic": topics[i] }).addClass("topic-button");
 
     $("#button-layout").append(b);
 
