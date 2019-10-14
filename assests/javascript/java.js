@@ -2,7 +2,7 @@ var topics = ["destiny2", "wakeboarding", "dominoes","explosions"];
 //dipslay topics array as buttons to click
 displayButtons();
 
-$(".topic-button").on("click", function () {
+$("#button-layout").on("click",".topic-button", function () {
   var topic = $(this).attr("data-topic");
   var key = "XzBs6CdLaZ3hdeMUzEqOHA21QMUx1BXV";
   var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -47,7 +47,7 @@ $("#gifs-appear-here").on("click", ".gif", function() {
     $(this).attr("data-state", "still");
   }
 });
-
+//submit button puts new topic button to click along default buttons.
 $(".submit-button").on("click", function(){
   event.preventDefault();
   var newTopic = $("#topic-input").val().trim();
@@ -61,9 +61,7 @@ function displayButtons() {
   $("#button-layout").empty();
   for (var i = 0; i < topics.length; i++) {
     var b = $("<button>").text(topics[i]);
-    b.attr({ "data-state": "still", "data-topic": topics[i] }).addClass("topic-button");
-
+    b.attr({"data-topic": topics[i]}).addClass("topic-button");
     $("#button-layout").append(b);
-
   }
 }
